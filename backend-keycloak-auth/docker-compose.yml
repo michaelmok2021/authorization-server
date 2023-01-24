@@ -1,29 +1,47 @@
-version: '3'
+version: '3.7'
+
+volumes:
+  mysql_data:
+    driver: local
 
 services:
-  db:
-    image: postgres:13.5
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - mysql_data:/var/lib/mysql
     environment:
-      POSTGRES_HOST_AUTH_METHOD: trust
-      POSTGRES_USER: my_admin
-      POSTGRES_PASSWORD: my_password
-      POSTGRES_DB: keycloak_db
-    ports:
-      - 5432:5432
-  kc:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+  #-------------- Keycloak 13 --------------
+  keycloak:
     image: quay.io/keycloak/keycloak:legacy
     environment:
-      DB_VENDOR: POSTGRES
-      DB_ADDR: db
-      DB_DATABASE: keycloak_db
-      DB_USER: my_admin
-      DB_SCHEMA: public
-      DB_PASSWORD: my_password
-      KEYCLOAK_HOSTNAME: backend-keycloak-auth
-      KEYCLOAK_USER: kc_admin
-      KEYCLOAK_PASSWORD: kc_password
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: Pa55w0rd
+      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the MySQL JDBC driver documentation in order to use it.
+      #JDBC_PARAMS: "connectTimeout=30000"
     ports:
       - 8080:8080
+      - 8443:8443
     depends_on:
-      - db
-
+      - mysql
+  #-------------- PHPMYADMIN --------------
+  phpmyadmin:
+    container_name: phpmyadmin_backend
+    image: phpmyadmin:latest
+#    restart: unless-stopped
+    ports:
+      - 8090:80
+    environment:
+      # we specify that we connect to an arbitrary server with the flag below
+      # "arbitrary" means you're able to specify which database server to use on login page of phpmyadmin
+      PMA_ARBITRARY: 1
+    depends_on:
+      - mysql

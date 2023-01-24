@@ -19,10 +19,14 @@ spring:
           gateway:
             provider: my-provider
             client-id: my_client
-            client-secret: q6jaO6zp9ay8zFGlGjpzwtp6nXW1Jj5C
+            client-secret: H6KarpzuCsqnppPFGwzINtnzQJmJORug
             authorization-grant-type: authorization_code
             redirect-uri: "http://backend-gateway-client:8083/login/oauth2/code/{registrationId}"
-            scope: openid, message.read
+            scope: openid, messages.read
         provider:
           my-provider:
-            issuer-uri: http://backend-keycloak-auth:8080/auth/realms/my_realm
+            issuer-uri: http://backend-auth:8080/auth/realms/my_realm
+#            issuer-uri: https://localhost:8443/auth/realms/my_realm
+
+# example URL
+# http://backend-gateway-client:8083/messages
