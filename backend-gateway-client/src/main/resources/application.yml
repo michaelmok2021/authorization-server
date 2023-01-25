@@ -22,7 +22,12 @@ spring:
             client-secret: H6KarpzuCsqnppPFGwzINtnzQJmJORug
             authorization-grant-type: authorization_code
             redirect-uri: "http://backend-gateway-client:8083/login/oauth2/code/{registrationId}"
-            scope: openid, messages.read
+            scope:
+              - openid
+              - email
+              - profile
+              - roles
+              - messages.read
         provider:
           my-provider:
             issuer-uri: http://backend-auth:8080/auth/realms/my_realm
