@@ -12,9 +12,19 @@ spring:
             Path=/messages/**
           filters:
             TokenRelay=
+        - id: info
+          uri: http://backend-resources:8082/user/info
+          predicates:
+            Path=/user/info/**
+          filters:
+            TokenRelay=
   security:
     oauth2:
       client:
+        provider:
+          my-provider:
+            issuer-uri: http://backend-auth:8080/auth/realms/my_realm
+        #            issuer-uri: https://localhost:8443/auth/realms/my_realm
         registration:
           gateway:
             provider: my-provider
@@ -28,10 +38,6 @@ spring:
               - profile
               - roles
               - messages.read
-        provider:
-          my-provider:
-            issuer-uri: http://backend-auth:8080/auth/realms/my_realm
-#            issuer-uri: https://localhost:8443/auth/realms/my_realm
 
 # example URL
 # http://backend-gateway-client:8083/messages
