@@ -26,32 +26,12 @@ The backend-auth needs a database where to store the credentials. The following 
 docker run -d -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_USER=auth_usr -e POSTGRES_PASSWORD=pwd -e POSTGRES_DB=authdb -p 5434:5432 postgres:13
 ```
 
-## Chapter 1
+## Useful links
 
-In this first chapter I explain how the OAuth2 and OpenID connect protocols work. For that, I will create a example
-with 3 backends. In the OAuth2 protocol, I need a client (backend-client), a resource server (backend-server) and the 
-authorization server (backend-auth).
+Follow this link to see how to setup the claims in keycloak
 
-The backend-client is a registered client in the backend-auth. The user will grant a temporary access to some resources
-(from backend-resources) to backend-client. To validate this access, backend-client will delegate to backend-auth the 
-authentication of the user. Then backend-client will request resources from backend-resources with the token created by
-backend-auth.
+Ty to inport this realm into keycloak
 
-The main concept of OAuth2 is that the client will never handle the credentials of the user. This will be delegated
-to backend-auth. Backend-auth could be an external entity which handles multiple clients connexions (as Google, 
-Facebook, Github...). 
+https://github.com/Baeldung/spring-security-oauth/blob/master/oauth-jwt/jwt-auth-server/src/main/resources/baeldung-realm.json
 
-On the top of that, OpenID Connect will send a richer information about the authenticated user from backend-auth to
-backend-client. This will reduce the communication between those to validate the identity and to obtain some 
-profile information.
-
-
-## Chapter 2
-
-In this second chapter I use an application built on top of Spring Cloud Gateway as the Client Server. This application
-will try to use the Resources Server using the OAuth2 protocol.
-
-Most of the time, the Resource Server and Authorization Server are existing applications which are consumed by hundreds
-and thousands of clients. The goal is the consume them from a custom application. I've chosen Spring Cloud Gateway as
-this is a common entry point in a microservice architecture.
-
+https://www.baeldung.com/keycloak-custom-user-attributes
