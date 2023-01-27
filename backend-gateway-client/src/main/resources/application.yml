@@ -1,21 +1,22 @@
 server:
-  port: 8083
+  port: ${gateway-server-port}
 
 spring:
-  application.name: backend-gateway-client
+  application.name: ${application-name}
   cloud:
     gateway:
       routes:
         - id: resources
-          uri: http://backend-resources:8082/messages
+          uri: ${resource-server}/messages
           predicates:
             Path=/messages/**
           filters:
             TokenRelay=
-        - id: info
-          uri: http://backend-resources:8082/user/info
+
+        - id: info1
+          uri: ${resource-server}/user/info
           predicates:
-            Path=/user/info/**
+            Path=/info/**
           filters:
             TokenRelay=
   security:
@@ -23,21 +24,16 @@ spring:
       client:
         provider:
           my-provider:
-            issuer-uri: http://backend-auth:8080/auth/realms/my_realm
-        #            issuer-uri: https://localhost:8443/auth/realms/my_realm
+            issuer-uri: ${auth-server}/realms/${realm}
+        #            issuer-uri: https://localhost:8443/realms/${realm}
         registration:
           gateway:
             provider: my-provider
-            client-id: my_client
-            client-secret: H6KarpzuCsqnppPFGwzINtnzQJmJORug
+            client-id: ${clientID}
+            client-secret: ${client-secret}
             authorization-grant-type: authorization_code
-            redirect-uri: "http://backend-gateway-client:8083/login/oauth2/code/{registrationId}"
-            scope:
-              - openid
-              - email
-              - profile
-              - roles
-              - messages.read
+            redirect-uri: "${gateway-server}/login/oauth2/code/{registrationId}"
+            scope: openid, email, profile, roles, messages.read
 
 # example URL
 # http://backend-gateway-client:8083/messages

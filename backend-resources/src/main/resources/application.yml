@@ -9,9 +9,10 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://backend-auth:8080/auth/realms/my_realm
-          jwk-set-uri: http://backend-auth:8080/auth/realms/my_realm/protocol/openid-connect/certs
+          issuer-uri: http://backend-auth:8070/realms/${realm}
+          jwk-set-uri: http://backend-auth:8070/realms/${realm}/protocol/openid-connect/certs
+
 #        opaquetoken:
-#          introspection-uri: http:/backend-auth:8080/auth/realms/my_realm/protocol/openid-connect/token/introspect
-#          client-id: my_client
-#          client-secret: H6KarpzuCsqnppPFGwzINtnzQJmJORug
+#          introspection-uri: http:/backend-auth:8070/realms/${realm}/protocol/openid-connect/token/introspect
+#          client-id: ${clientID}
+#          client-secret: ${client-secret}
