@@ -30,8 +30,8 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: Pa55w0rd
       KC_HEALTH_ENABLED: "true"
-      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/demo/certs/localhostcert.pem
-      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/demo/certs/localhostkey.pem
+      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/demo/certs/backend-authcert.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/demo/certs/backend-authkey.pem
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/health/ready" ]
       interval: 15s

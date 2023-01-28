@@ -29,7 +29,7 @@ public class SecurityConfig {
         http.mvcMatcher("/**")
                 .authorizeRequests()
                 .mvcMatchers("/**")
-                .access("hasAuthority('SCOPE_messages.read')")
+                .access("hasAuthority('SCOPE_message.read')")
                 .and()
                 .oauth2ResourceServer()
                 .jwt();

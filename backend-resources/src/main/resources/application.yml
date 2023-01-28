@@ -1,5 +1,14 @@
 server:
-  port: 8082
+  port: 8643
+  ssl:
+# comment out as I not able to get Spring boot 2.7.1 to use pem files.
+#    certificate-private-key: classpath:localhostkey.pem
+#    certificate: classpath:localhostcert.pem
+    key-store: classpath:backend-resources-cert.p12
+    key-store-password: password99
+    keyStoreType: PKCS12
+    keyAlias: bootalias
+
 
 spring:
   application.name: backend-resources
@@ -9,8 +18,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://backend-auth:8070/realms/${realm}
-          jwk-set-uri: http://backend-auth:8070/realms/${realm}/protocol/openid-connect/certs
+          issuer-uri: https://backend-auth:8443/realms/myfirsttest
+          jwk-set-uri: https://backend-auth:8443/realms/myfirsttest/protocol/openid-connect/certs
 
 #        opaquetoken:
 #          introspection-uri: http:/backend-auth:8070/realms/${realm}/protocol/openid-connect/token/introspect

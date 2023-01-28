@@ -1,20 +1,28 @@
 server:
-  port: ${gateway-server-port}
+  port: 8543
+  ssl:
+#    certificate-private-key: classpath:localhostkey.pem
+#    certificate: classpath:localhostcert.pem
+    key-store: classpath:backend-gateway-client-cert.p12
+    key-store-password: password99
+    key-store-type: PKCS12
+    trust-store: classpath:backend-gateway-client-keystore.jks
+    trust-store-password: password99
 
 spring:
-  application.name: ${application-name}
+  application.name: backend-gateway-client
   cloud:
     gateway:
       routes:
         - id: resources
-          uri: ${resource-server}/messages
+          uri: https://backend-resources:8643/messages
           predicates:
             Path=/messages/**
           filters:
             TokenRelay=
 
         - id: info1
-          uri: ${resource-server}/user/info
+          uri: https://backend-resources:8643/user/info
           predicates:
             Path=/info/**
           filters:
@@ -24,16 +32,15 @@ spring:
       client:
         provider:
           my-provider:
-            issuer-uri: ${auth-server}/realms/${realm}
-        #            issuer-uri: https://localhost:8443/realms/${realm}
+            issuer-uri: https://backend-auth:8443/realms/myfirsttest
         registration:
           gateway:
             provider: my-provider
-            client-id: ${clientID}
-            client-secret: ${client-secret}
+            client-id: homedemo1
+            client-secret: 1bakAdzduTcZc5q8VXtlkkCx9OwR6Zhe
             authorization-grant-type: authorization_code
-            redirect-uri: "${gateway-server}/login/oauth2/code/{registrationId}"
-            scope: openid, email, profile, roles, messages.read
+            redirect-uri: "https://backend-gateway-client:8543/login/oauth2/code/{registrationId}"
+            scope: openid, email, profile, roles, message.read
 
 # example URL
-# http://backend-gateway-client:8083/messages
+# https://backend-gateway-client:8543/messages
