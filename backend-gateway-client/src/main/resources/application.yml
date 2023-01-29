@@ -1,13 +1,10 @@
 server:
   port: 8543
   ssl:
-#    certificate-private-key: classpath:localhostkey.pem
-#    certificate: classpath:localhostcert.pem
-    key-store: classpath:backend-gateway-client-cert.p12
-    key-store-password: password99
-    key-store-type: PKCS12
-    trust-store: classpath:backend-gateway-client-keystore.jks
-    trust-store-password: password99
+    certificate: classpath:backend-gateway-clientcert.pem
+    certificate-private-key: classpath:backend-gateway-clientkey.pem
+#    trust-store: classpath:backend-gateway-client-keystore.jks
+#    trust-store-password: password99
 
 spring:
   application.name: backend-gateway-client
@@ -32,12 +29,12 @@ spring:
       client:
         provider:
           my-provider:
-            issuer-uri: https://backend-auth:8443/realms/myfirsttest
+            issuer-uri: https://sso.billview.com.au/realms/myfirsttest
         registration:
           gateway:
             provider: my-provider
             client-id: homedemo1
-            client-secret: 1bakAdzduTcZc5q8VXtlkkCx9OwR6Zhe
+            client-secret: VuS3dVrR3Vvb0ISizwk3DR2JdBQfNDfY
             authorization-grant-type: authorization_code
             redirect-uri: "https://backend-gateway-client:8543/login/oauth2/code/{registrationId}"
             scope: openid, email, profile, roles, message.read

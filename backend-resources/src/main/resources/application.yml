@@ -18,8 +18,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://backend-auth:8443/realms/myfirsttest
-          jwk-set-uri: https://backend-auth:8443/realms/myfirsttest/protocol/openid-connect/certs
+          issuer-uri: https://sso.billview.com.au/realms/myfirsttest
+          jwk-set-uri: https://sso.billview.com.au/realms/myfirsttest/protocol/openid-connect/certs
 
 #        opaquetoken:
 #          introspection-uri: http:/backend-auth:8070/realms/${realm}/protocol/openid-connect/token/introspect

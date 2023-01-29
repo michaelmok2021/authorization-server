@@ -7,23 +7,29 @@ openssl req -x509 -out backend-gateway-clientcert.pem -keyout backend-gateway-cl
 -subj '/CN=backend-gateway-client' -extensions EXT -config <( \
 printf "[dn]\nCN=backend-gateway-client\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:backend-gateway-client\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
 ```
-then convert the pem files to p12, when prompted enter password as password99
-```shell
-openssl pkcs12 -export -out backend-gateway-client-cert.p12 -in backend-gateway-clientcert.pem -inkey backend-gateway-clientskey.pem -name bootalias
-```
-edit the application.yml as follows
+edit the application.yml and specify the pem certificate path as follows
 ```shell
 server:
-  port: 8443
-  http.port: 8080
+  port: 8543
   ssl:
-    key-store: classpath:backend-gateway-client-cert.p12
-    key-store-password: password99
-    keyStoreType: PKCS12
-    keyAlias: bootalias
+    certificate: classpath:backend-gateway-clientcert.pem
+    certificate-private-key: classpath:backend-gateway-clientkey.pem  
 ```
-## Import the backend-auth p12 cert into a Java truststore...
-Login to a linux terminal and issue the following command
+
+## import the sso cert into the java cacerts file eg /etc/ssl/certs/java
+Do the following to import the sso public cert into java cacerts file. The default keystore password is changeit
+
+We also need to import the backend-resource self sign into the java cacerts
+
 ```shell
-keytool -importkeystore -deststorepass password99 -destkeystore backend-gateway-client-keystore.jks -srckeystore backend-gateway-client-cert.p12 -srcstoretype PKCS12 -srcstorepass password99
+cd etc/ssl/certs/java
+cp cacerts cacerts.ori
+cp ~/Downloads/sso.billview.com.au.cer .
+keytool -printcert -file sso.billview.com.au.cer
+keytool -import -alias sso_billview -file sso.billview.com.au.cer -keystore cacerts
+
+sudo cp ~/Downloads/backend-resources.cer .
+sudo keytool -printcert -file backend-resources.cer
+sudo keytool -import -alias local_backend-resources -file backend-resources.cer -keystore cacerts
 ```
+Note we also need to change intellij to use external jdk
