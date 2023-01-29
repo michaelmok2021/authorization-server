@@ -9,6 +9,7 @@ services:
   mysql:
     container_name: mysql_kc_dev
     image: mysql:8.0
+    restart: unless-stopped
     volumes:
       - mysql_data:/var/lib/mysql
     environment:
@@ -21,6 +22,7 @@ services:
   keycloak:
     container_name: keycloak
     image: quay.io/keycloak/keycloak:20.0.3
+    restart: unless-stopped
     environment:
       KC_DB: mysql
       KC_DB_URL_HOST: mysql
@@ -30,8 +32,8 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: Pa55w0rd
       KC_HEALTH_ENABLED: "true"
-      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/demo/certs/backend-authcert.pem
-      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/demo/certs/backend-authkey.pem
+      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/demo/certs/cert.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/demo/certs/privkey.pem
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/health/ready" ]
       interval: 15s
@@ -41,8 +43,8 @@ services:
     volumes:
       - ./certs:/opt/keycloak/demo/certs
     ports:
-      - 8070:8080
-      - 8443:8443
+      - 80:8080
+      - 443:8443
     depends_on:
       - mysql
   #-------------- PHPMYADMIN --------------

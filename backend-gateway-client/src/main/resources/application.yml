@@ -19,7 +19,7 @@ spring:
             TokenRelay=
 
         - id: info1
-          uri: https://backend-resources:8643/user/info
+          uri: https://backend-resources:8643/user
           predicates:
             Path=/info/**
           filters:
