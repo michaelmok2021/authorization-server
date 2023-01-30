@@ -32,8 +32,12 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: Pa55w0rd
       KC_HEALTH_ENABLED: "true"
-      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/demo/certs/cert.pem
-      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/demo/certs/privkey.pem
+      KC_HOSTNAME_URL: https://sso.billview.com.au
+      KC_LOG_LEVEL: info
+      KC_LOG: file
+      #  KC_HTTP_RELATIVE_PATH: /auth2
+      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/conf/server.crt.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/conf/server.key.pem
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/health/ready" ]
       interval: 15s
@@ -41,9 +45,21 @@ services:
       retries: 15
     command: start-dev
     volumes:
-      - ./certs:/opt/keycloak/demo/certs
+
+      #  - ./nginx/cert/letsencrypt/live/example.com/privkey.pem:/opt/keycloak/conf/server.key.pem
+      #  - ./nginx/cert/letsencrypt/live/example.com/fullchain.pem:/opt/keycloak/conf/server.crt.pem
+
+      #  - /etc/letsencrypt/live/sso.billview.com.au/privkey.pem:/opt/keycloak/conf/server.key.pem:ro
+      #  - /etc/letsencrypt/live/sso.billview.com.au/fullchain.pem:/opt/keycloak/conf/server.crt.pem:ro
+      - ./certs/privkey.pem:/opt/keycloak/conf/server.key.pem:ro
+      - ./certs/fullchain.pem:/opt/keycloak/conf/server.crt.pem:ro
+
+      - ./config/keycloak.conf:/opt/keycloak/configuration/keycloak.conf
+      #   - ./keycloak/providers:/opt/keycloak/providers
+      - ./data:/opt/keycloak/data
+      - ./themes:/opt/keycloak/themes
     ports:
-      - 80:8080
+      # - 80:8080
       - 443:8443
     depends_on:
       - mysql

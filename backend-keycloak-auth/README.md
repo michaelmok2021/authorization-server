@@ -2,12 +2,16 @@
 Login to linux terminal
 
 Create a certs folder in the folder where the docker-compose.yml file is located eg
+https://certbot.eff.org/docs/using.html#where-are-my-certificates
 ```shell
 mkdir /home/dockeruser/keycloak-20.0.3/certs
 ```
 Install certbot using snap ie
-```shell
 
+
+THe letsencrypt cert as located below
+```shell
+ls /etc/letsencrypt/live/sso.billview.com.au
 ```
 Run the following command
 ```shell
@@ -26,3 +30,6 @@ The authorisation endpoint is
 ```shell
 https://backend-auth:8443/realms/myfirsttest/protocol/openid-connect/auth
 ```
+Need to check this out to put keycloak behinf nginx
+
+https://www.reddit.com/r/selfhosted/comments/zpj7ss/keycloak_nginx_oauth2proxy_with_dockercompose_an/
