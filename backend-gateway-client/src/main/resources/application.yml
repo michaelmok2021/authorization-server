@@ -33,8 +33,8 @@ spring:
         registration:
           gateway:
             provider: my-provider
-            client-id: homedemo1
-            client-secret: VuS3dVrR3Vvb0ISizwk3DR2JdBQfNDfY
+            client-id: ${client-ID}
+            client-secret: ${client-secret}
             authorization-grant-type: authorization_code
             redirect-uri: "https://backend-gateway-client:8543/login/oauth2/code/{registrationId}"
             scope: openid, email, profile, roles, message.read

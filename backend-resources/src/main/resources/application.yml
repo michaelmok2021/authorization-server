@@ -5,7 +5,7 @@ server:
 #    certificate-private-key: classpath:localhostkey.pem
 #    certificate: classpath:localhostcert.pem
     key-store: classpath:backend-resources-cert.p12
-    key-store-password: password99
+    key-store-password: ${ks-pass}
     keyStoreType: PKCS12
     keyAlias: bootalias
 
