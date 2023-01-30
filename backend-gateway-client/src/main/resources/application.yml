@@ -10,20 +10,38 @@ spring:
   application.name: backend-gateway-client
   cloud:
     gateway:
+      default-filters:
+      - TokenRelay=
       routes:
         - id: resources
           uri: https://backend-resources:8643/messages
           predicates:
             Path=/messages/**
+
+        - id: testRename
+          uri: https://backend-resources:8643/messages
+          predicates:
+          - Path=/api/any/**,/api/redirect
           filters:
-            TokenRelay=
+          - RewritePath=/api/any/.+,/messages
+          - RewritePath=/api/redirect,/messages
+
+        - id: mike
+          uri: https://backend-resources:8643/post/mike
+          predicates:
+          - Path=/post/mike
+
+        - id: mikeSays
+          uri: https://backend-resources:8643/mike-says
+          predicates:
+          - Path=/mike-says
+          filters:
 
         - id: info1
           uri: https://backend-resources:8643/user
           predicates:
             Path=/info/**
-          filters:
-            TokenRelay=
+
   security:
     oauth2:
       client:
