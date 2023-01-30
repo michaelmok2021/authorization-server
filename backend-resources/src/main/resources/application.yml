@@ -1,14 +1,8 @@
 server:
   port: 8643
   ssl:
-# comment out as I not able to get Spring boot 2.7.1 to use pem files.
-#    certificate-private-key: classpath:localhostkey.pem
-#    certificate: classpath:localhostcert.pem
-    key-store: classpath:backend-resources-cert.p12
-    key-store-password: ${ks-pass}
-    keyStoreType: PKCS12
-    keyAlias: bootalias
-
+    certificate: classpath:backend-resourcescert.pem
+    certificate-private-key: classpath:backend-resourceskey.pem
 
 spring:
   application.name: backend-resources
