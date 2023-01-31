@@ -2,6 +2,8 @@ package com.sergio.auth.backend.client.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -50,10 +52,56 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) throws Exception {
-        log.info("disabling csrf");
+        log.info("Programmatically defining HTTP configuration");
         http.csrf().disable()
-                .oauth2Client();
+                .oauth2Client()
+                .and()
+                .oauth2Login()
+                    .clientRegistrationRepository(clientRegistrations());
+
         return http.build();
     }
 
+    @Bean
+    public RouteLocator myRoutes(RouteLocatorBuilder builder) {
+        return builder
+                .routes()
+                .route(resources -> resources
+
+                        .path("/messages/**")
+                        .filters(f -> f.tokenRelay())
+                        .uri("https://backend-resources:8643/messages"))
+
+                .route(testRename -> testRename
+                        .path("/api/any/**,/api/redirect")
+                        .filters(f -> f
+                                .tokenRelay()
+                                .rewritePath("/api/any/.+","/messages")
+                                .rewritePath("/api/redirect","/messages"))
+                        .uri("https://backend-resources:8643/messages"))
+
+                .route(mike -> mike
+                        .path("/mike")
+                        .filters(f -> f.tokenRelay())
+                        .uri("https://backend-resources:8643/mike"))
+
+                .route(mike -> mike
+                        .path("/post/mike")
+                        .filters(f -> f.tokenRelay())
+                        .uri("https://backend-resources:8643/post/mike"))
+
+                .route(mikeSays -> mikeSays
+                        .path("/mike-says")
+                        .filters(f -> f.tokenRelay())
+                        .uri("https://backend-resources:8643/mike-says"))
+
+                .route(info1 -> info1
+                        .path("/info/**")
+                        .filters(f -> f.tokenRelay())
+                        .uri("https://backend-resources:8643/user"))
+
+        .build();
+    }
 }
+
+
