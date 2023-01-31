@@ -61,11 +61,13 @@ spring:
             authorization-grant-type: authorization_code
             redirect-uri: "https://backend-gateway-client:8543/login/oauth2/code/{registrationId}"
             scope: openid, email, profile, roles, message.read
-
+# https://backend-gateway-client:8543/login/oauth2/code/gateway
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     reactor.netty: DEBUG
+    com.sergio.auth.backend.client: DEBUG
+    org.springframework.security.oauth2.client: DEBUG
 
 # example URL
 # https://backend-gateway-client:8543/messages

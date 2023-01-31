@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.jwt.MappedJwtClaimSetConverter;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Collections;
 import java.util.Map;
@@ -29,30 +30,22 @@ import java.util.Map;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    ReactiveClientRegistrationRepository clientRegistrations() {
-        ClientRegistration clientRegistration = ClientRegistrations
-                .fromOidcIssuerLocation("https://sso.billview.com.au/realms/myfirsttest")
-                .clientId("homedemo1")
-                .clientSecret("Tazr42CrDbtuqS21zLNeQOcQaT3KyhYL")
-                .redirectUri("https://backend-gateway-client:8543/login/oauth2/code/{registrationId}")
-                .scope("openid", "email", "profile", "roles", "message.read")
-                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .build();
-        return new InMemoryReactiveClientRegistrationRepository(clientRegistration);
-    }
-
     /**
-     * https://docs.spring.io/spring-security/site/docs/5.1.5.RELEASE/reference/html/webflux-oauth2.html
+     * https://www.baeldung.com/spring-webclient-oauth2
+     *
      * @param http
      * @return
      * @throws Exception
      */
     @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) throws Exception {
-        log.info("disabling csrf");
-        http.csrf().disable()
-                .oauth2Client();
+        log.info("disabling csrf 2223424234");
+        http.csrf().disable().authorizeExchange()
+                .anyExchange()
+                .authenticated()
+                .and()
+                .oauth2Login();
+
         return http.build();
     }
 
