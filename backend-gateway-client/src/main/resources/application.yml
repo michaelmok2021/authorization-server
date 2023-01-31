@@ -40,7 +40,6 @@ spring:
           uri: https://backend-resources:8643/mike-says
           predicates:
           - Path=/mike-says
-          filters:
 
         - id: info1
           uri: https://backend-resources:8643/user
