@@ -41,6 +41,16 @@ spring:
           predicates:
             Path=/info/**
 
+        - id: getElement
+          uri: https://${resources}//element
+          predicates:
+            Path=/element/**
+
+        - id: postElement
+          uri: https://${resources}/addElement
+          predicates:
+            Path=/addElement
+
   security:
     oauth2:
       client:
