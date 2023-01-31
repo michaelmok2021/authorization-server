@@ -1,5 +1,8 @@
 server:
-  port: 8082
+  port: 8643
+  ssl:
+    certificate: classpath:backend-resourcescert.pem
+    certificate-private-key: classpath:backend-resourceskey.pem
 
 spring:
   application.name: backend-resources
@@ -9,8 +12,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://backend-auth:8070/realms/${realm}
-          jwk-set-uri: http://backend-auth:8070/realms/${realm}/protocol/openid-connect/certs
+          issuer-uri: https://sso.billview.com.au/realms/myfirsttest
+          jwk-set-uri: https://sso.billview.com.au/realms/myfirsttest/protocol/openid-connect/certs
 
 #        opaquetoken:
 #          introspection-uri: http:/backend-auth:8070/realms/${realm}/protocol/openid-connect/token/introspect

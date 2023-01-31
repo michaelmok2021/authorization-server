@@ -1,39 +1,77 @@
 server:
-  port: ${gateway-server-port}
+  port: 8543
+  ssl:
+    certificate: classpath:backend-gateway-clientcert.pem
+    certificate-private-key: classpath:backend-gateway-clientkey.pem
+#    trust-store: classpath:backend-gateway-client-keystore.jks
+#    trust-store-password: password99
 
 spring:
-  application.name: ${application-name}
+  application.name: backend-gateway-client
   cloud:
     gateway:
+      default-filters:
+      - TokenRelay=
       routes:
         - id: resources
-          uri: ${resource-server}/messages
+          uri: https://${resources}/messages
           predicates:
             Path=/messages/**
-          filters:
-            TokenRelay=
 
-        - id: info1
-          uri: ${resource-server}/user/info
+        - id: testRename
+          uri: https://${resources}/messages
+          predicates:
+          - Path=/api/any/**,/api/redirect
+          filters:
+          - RewritePath=/api/any/.+,/messages
+          - RewritePath=/api/redirect,/messages
+
+        - id: rose
+          uri: https://${resources}/rose
+          predicates:
+          - Path=/rose
+
+        - id: postMessage
+          uri: https://${resources}/post/message
+          predicates:
+          - Path=/post/message
+
+        - id: info
+          uri: https://${resources}/user
           predicates:
             Path=/info/**
-          filters:
-            TokenRelay=
+
+        - id: getElement
+          uri: https://${resources}//element
+          predicates:
+            Path=/element/**
+
+        - id: postElement
+          uri: https://${resources}/addElement
+          predicates:
+            Path=/addElement
+
   security:
     oauth2:
       client:
         provider:
           my-provider:
-            issuer-uri: ${auth-server}/realms/${realm}
-        #            issuer-uri: https://localhost:8443/realms/${realm}
+            issuer-uri: https://sso.billview.com.au/realms/myfirsttest
         registration:
           gateway:
             provider: my-provider
-            client-id: ${clientID}
-            client-secret: ${client-secret}
+            client-id: ${client_ID}
+            client-secret: ${client_secret}
             authorization-grant-type: authorization_code
-            redirect-uri: "${gateway-server}/login/oauth2/code/{registrationId}"
-            scope: openid, email, profile, roles, messages.read
+            redirect-uri: "https://${gateway}/login/oauth2/code/{registrationId}"
+            scope: openid, email, profile, roles, message.read
+# https://backend-gateway-client:8543/login/oauth2/code/gateway
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG
+    com.sergio.auth.backend.client: DEBUG
+    org.springframework.security.oauth2.client: DEBUG
 
 # example URL
-# http://backend-gateway-client:8083/messages
+# https://backend-gateway-client:8543/messages
