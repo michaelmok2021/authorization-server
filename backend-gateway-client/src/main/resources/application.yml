@@ -62,5 +62,10 @@ spring:
             redirect-uri: "https://backend-gateway-client:8543/login/oauth2/code/{registrationId}"
             scope: openid, email, profile, roles, message.read
 
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG
+
 # example URL
 # https://backend-gateway-client:8543/messages
