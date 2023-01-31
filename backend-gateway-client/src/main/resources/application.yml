@@ -14,35 +14,30 @@ spring:
       - TokenRelay=
       routes:
         - id: resources
-          uri: https://backend-resources:8643/messages
+          uri: https://${resources}/messages
           predicates:
             Path=/messages/**
 
         - id: testRename
-          uri: https://backend-resources:8643/messages
+          uri: https://${resources}/messages
           predicates:
           - Path=/api/any/**,/api/redirect
           filters:
           - RewritePath=/api/any/.+,/messages
           - RewritePath=/api/redirect,/messages
 
-        - id: mike
-          uri: https://backend-resources:8643/mike
+        - id: rose
+          uri: https://${resources}/rose
           predicates:
-          - Path=/mike
+          - Path=/rose
 
-        - id: mike
-          uri: https://backend-resources:8643/post/mike
+        - id: postMessage
+          uri: https://${resources}/post/message
           predicates:
-          - Path=/post/mike
+          - Path=/post/message
 
-        - id: mikeSays
-          uri: https://backend-resources:8643/mike-says
-          predicates:
-          - Path=/mike-says
-
-        - id: info1
-          uri: https://backend-resources:8643/user
+        - id: info
+          uri: https://${resources}/user
           predicates:
             Path=/info/**
 
@@ -58,7 +53,7 @@ spring:
             client-id: ${client_ID}
             client-secret: ${client_secret}
             authorization-grant-type: authorization_code
-            redirect-uri: "https://backend-gateway-client:8543/login/oauth2/code/{registrationId}"
+            redirect-uri: "https://${gateway}/login/oauth2/code/{registrationId}"
             scope: openid, email, profile, roles, message.read
 # https://backend-gateway-client:8543/login/oauth2/code/gateway
 logging:
