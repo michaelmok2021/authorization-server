@@ -33,3 +33,8 @@ sudo keytool -printcert -file backend-resources.cer
 sudo keytool -import -alias local_backend-resources -file backend-resources.cer -keystore cacerts
 ```
 Note we also need to change intellij to use external jdk
+
+## to upload file to EC2 using private PEM key
+```shell
+scp -i /home/michael/CloudStation/security/michael-home-ec2-access.pem backend-gateway-client-0.0.3-SNAPSHOT.jar ubuntu@api.billview.com.au:/home/ubuntu/prod-apps/gateway-client.jar
+```
