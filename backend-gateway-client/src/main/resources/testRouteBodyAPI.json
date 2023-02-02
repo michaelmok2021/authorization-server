@@ -1,0 +1,22 @@
+{
+  "predicates": [
+    {
+      "name": "Path",
+      "args": {
+        "_genkey_0": "/test"
+      }
+    }
+  ],
+  "filters": [
+    {
+      "name": "RewritePath",
+      "args": {
+        "_genkey_0": "/test",
+        "_genkey_1": "/backend-resources/messages"
+      }
+    }
+  ],
+  "uri": "https://www.billview.com.au/backend-resources",
+  "order": 0
+}
+
