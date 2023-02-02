@@ -1,4 +1,4 @@
-package com.sergio.auth.backend.resources.config;
+package auth.backend.resources.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;

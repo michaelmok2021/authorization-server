@@ -16,7 +16,7 @@ server:
     certificate-private-key: classpath:backend-gateway-clientkey.pem  
 ```
 
-## import the sso cert into the java cacerts file eg /etc/ssl/certs/java
+## Import the sso cert into the java cacerts file eg /etc/ssl/certs/java
 Do the following to import the sso public cert into java cacerts file. The default keystore password is changeit
 
 We also need to import the backend-resource self sign into the java cacerts
@@ -34,7 +34,19 @@ sudo keytool -import -alias local_backend-resources -file backend-resources.cer 
 ```
 Note we also need to change intellij to use external jdk
 
-## to upload file to EC2 using private PEM key
+## Upload file to EC2 using private PEM key
 ```shell
 scp -i /home/michael/CloudStation/security/michael-home-ec2-access.pem backend-gateway-client-0.0.3-SNAPSHOT.jar ubuntu@api.billview.com.au:/home/ubuntu/prod-apps/gateway-client.jar
 ```
+
+
+
+| **ID**              	| **HTTP Method** 	| **Description**                                                             	|
+|---------------------	|-----------------	|-----------------------------------------------------------------------------	|
+| **_globalfilters_** 	|       GET       	| Displays the list of global filters applied to the routes.                  	|
+| **_routefilters_**  	|       GET       	| Displays the list of GatewayFilter factories applied to a particular route. 	|
+| **_refresh_**       	|       POST      	| Clears the routes cache.                                                    	|
+| **_routes_**        	|       GET       	| Displays the list of routes defined in the gateway.                         	|
+| **_routes/{id}_**   	|       GET       	| Displays information about a particular route.                              	|
+| **_routes/{id}_**   	|       POST      	| Add a new route to the gateway.                                             	|
+| **_routes/{id}_**   	|      DELETE     	| Remove an existing route from the gateway.                                  	|

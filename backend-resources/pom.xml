@@ -8,7 +8,7 @@
 		<version>2.7.8</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.sergio.auth</groupId>
+	<groupId>auth</groupId>
 	<artifactId>backend-resources</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
 	<name>Backend Resources</name>

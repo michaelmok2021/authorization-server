@@ -4,10 +4,24 @@ server:
     certificate: classpath:backend-gateway-clientcert.pem
     certificate-private-key: classpath:backend-gateway-clientkey.pem
 
+management:
+# Custom management port
+#   server:
+#     port: 8081
+  endpoints:
+    web:
+      exposure:
+        include: gateway
+  endpoint:
+    gateway:
+      enabled: true
+
+
 spring:
   application.name: backend-gateway-client
   cloud:
     gateway:
+      actuator.verbose.enabled: true
       default-filters:
         - TokenRelay=
       routes:
@@ -16,7 +30,7 @@ spring:
             - Path=/messages/**
           filters:
             - RewritePath=/messages, /backend-resources/messages
-          uri: https://www.billview.com.au
+          uri: https://www.billview.com.au/backend-resources
 
 #
 #        - id: testRename
@@ -43,7 +57,7 @@ spring:
             - Path=/info/**
 
 #        - id: getElement
-#          uri: https://${resources}//element
+#          uri: https://${resources}/element
 #          predicates:
 #            - Path=/element/**
 #
@@ -71,7 +85,7 @@ logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     reactor.netty: DEBUG
-    com.sergio.auth.backend.client: DEBUG
+    auth.backend.client: DEBUG
     org.springframework.security.oauth2.client: DEBUG
 
 # example URL
