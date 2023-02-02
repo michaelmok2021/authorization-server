@@ -3,53 +3,54 @@ server:
   ssl:
     certificate: classpath:backend-gateway-clientcert.pem
     certificate-private-key: classpath:backend-gateway-clientkey.pem
-#    trust-store: classpath:backend-gateway-client-keystore.jks
-#    trust-store-password: password99
 
 spring:
   application.name: backend-gateway-client
   cloud:
     gateway:
       default-filters:
-      - TokenRelay=
+        - TokenRelay=
       routes:
         - id: resources
-          uri: https://${resources}/messages
           predicates:
-            Path=/messages/**
-
-        - id: testRename
-          uri: https://${resources}/messages
-          predicates:
-          - Path=/api/any/**,/api/redirect
+            - Path=/messages/**
           filters:
-          - RewritePath=/api/any/.+,/messages
-          - RewritePath=/api/redirect,/messages
+            - RewritePath=/messages, /backend-resources/messages
+          uri: https://www.billview.com.au
 
-        - id: rose
-          uri: https://${resources}/rose
-          predicates:
-          - Path=/rose
+#
+#        - id: testRename
+#          uri: https://${resources}/messages
+#          predicates:
+#            - Path=/api/any/**,/api/redirect
+#          filters:
+#            - RewritePath=/api/any/.+,/messages
+#            - RewritePath=/api/redirect,/messages
+
+#        - id: rose
+#          uri: https://${resources}/rose
+#          predicates:
+#            - Path=/rose
 
         - id: postMessage
           uri: https://${resources}/post/message
           predicates:
-          - Path=/post/message
+            - Path=/post/message
 
         - id: info
           uri: https://${resources}/user
           predicates:
-            Path=/info/**
+            - Path=/info/**
 
-        - id: getElement
-          uri: https://${resources}//element
-          predicates:
-            Path=/element/**
-
-        - id: postElement
-          uri: https://${resources}/addElement
-          predicates:
-            Path=/addElement
+#        - id: getElement
+#          uri: https://${resources}//element
+#          predicates:
+#            - Path=/element/**
+#
+#        - id: postElement
+#          uri: https://${resources}/addElement
+#          predicates:
+#            - Path=/addElement
 
   security:
     oauth2:
