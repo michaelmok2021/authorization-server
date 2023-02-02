@@ -1,7 +1,7 @@
-### To enable self signed SSL in Keycloak Quarkus 20.+ 
+### To enable self-signed SSL in Keycloak Quarkus 20.+ 
 Login to linux terminal
 
-Create a certs folder in the folder where the docker-compose.yml file is located eg
+Create a certs folder in the folder where the docker-compose.yml file is located e.g.
 https://certbot.eff.org/docs/using.html#where-are-my-certificates
 ```shell
 mkdir /home/dockeruser/keycloak-20.0.3/certs

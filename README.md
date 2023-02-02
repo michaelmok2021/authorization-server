@@ -1,6 +1,6 @@
 # Authorization Server with Spring Security
 
-The content of this repository is explained in my Youtube channel.
+The content of this repository is explained in my YouTube channel.
 
 https://youtube.com/playlist?list=PLab_if3UBk9-AArufc8CryyhSDVqkNT-U
 
@@ -28,7 +28,7 @@ docker run -d -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_USER=auth_usr -e PO
 
 ## Useful links
 
-Follow this link to see how to setup the claims in keycloak
+Follow this link to see how to set up the claims in keycloak
 
 Ty to inport this realm into keycloak
 

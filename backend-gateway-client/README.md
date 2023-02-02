@@ -19,7 +19,7 @@ server:
 ## Import the sso cert into the java cacerts file eg /etc/ssl/certs/java
 Do the following to import the sso public cert into java cacerts file. The default keystore password is changeit
 
-We also need to import the backend-resource self sign into the java cacerts
+We also need to import the backend-resource self sign in to the java cacerts
 
 ```shell
 cd etc/ssl/certs/java
@@ -41,12 +41,12 @@ scp -i /home/michael/CloudStation/security/michael-home-ec2-access.pem backend-g
 
 
 
-| **ID**              	| **HTTP Method** 	| **Description**                                                             	|
-|---------------------	|-----------------	|-----------------------------------------------------------------------------	|
-| **_globalfilters_** 	|       GET       	| Displays the list of global filters applied to the routes.                  	|
-| **_routefilters_**  	|       GET       	| Displays the list of GatewayFilter factories applied to a particular route. 	|
-| **_refresh_**       	|       POST      	| Clears the routes cache.                                                    	|
-| **_routes_**        	|       GET       	| Displays the list of routes defined in the gateway.                         	|
-| **_routes/{id}_**   	|       GET       	| Displays information about a particular route.                              	|
-| **_routes/{id}_**   	|       POST      	| Add a new route to the gateway.                                             	|
-| **_routes/{id}_**   	|      DELETE     	| Remove an existing route from the gateway.                                  	|
+| **ID**              	 | **HTTP Method** 	 | **Description**                                                             	 |
+|-----------------------|-------------------|-------------------------------------------------------------------------------|
+| **_globalfilters_** 	 | GET       	       | Displays the list of global filters applied to the routes.                  	 |
+| **_routefilters_**  	 | GET       	       | Displays the list of GatewayFilter factories applied to a particular route. 	 |
+| **_refresh_**       	 | POST      	       | Clears the routes cache.                                                    	 |
+| **_routes_**        	 | GET       	       | Displays the list of routes defined in the gateway.                         	 |
+| **_routes/{id}_**   	 | GET       	       | Displays information about a particular route.                              	 |
+| **_routes/{id}_**   	 | POST      	       | Add a new route to the gateway.                                             	 |
+| **_routes/{id}_**   	 | DELETE     	      | Remove an existing route from the gateway.                                  	 |

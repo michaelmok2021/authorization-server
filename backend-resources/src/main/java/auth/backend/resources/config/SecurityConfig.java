@@ -3,12 +3,10 @@ package auth.backend.resources.config;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.MappedJwtClaimSetConverter;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
@@ -54,7 +52,7 @@ public class SecurityConfig {
         return jwtDecoder;
     }
 
-    public class OrganizationSubClaimAdapter implements
+    public static class OrganizationSubClaimAdapter implements
             Converter<Map<String, Object>, Map<String, Object>> {
 
         private final MappedJwtClaimSetConverter delegate =

@@ -25,17 +25,14 @@ public class ResourceController {
     @GetMapping("/messages")
 //    public String getMessages(JwtAuthenticationToken auth, @AuthenticationPrincipal Jwt princial){
     public String getMessages(@AuthenticationPrincipal Jwt principal){
-        log.info("Claims is ", principal.getClaims());
-//        if ( auth.getAuthorities().contains(GOLD_CUSTOMER)) {
-//            // q.setPrice(10.0);
-//        }
+        log.info("Claims is " + principal.getClaims().toString());
         return "the protected messages";
     }
 
     @GetMapping("/user/info")
     public Map<String, Object> getUserInfo(@AuthenticationPrincipal Jwt principal) {
         log.info("getUserInfo called for user " + principal.getClaimAsString("preferred_username"));
-        Map<String, String> map = new Hashtable<String, String>();
+        Map<String, String> map = new Hashtable<>();
         map.put("user_name", principal.getClaimAsString("preferred_username"));
         map.put("organization", principal.getClaimAsString("organization"));
         return Collections.unmodifiableMap(map);

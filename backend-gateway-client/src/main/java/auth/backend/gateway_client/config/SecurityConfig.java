@@ -12,14 +12,13 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class SecurityConfig {
 
     /**
-     * https://www.baeldung.com/spring-webclient-oauth2
+     * <a href="https://www.baeldung.com/spring-webclient-oauth2">Reference to source</a>
      *
-     * @param http
-     * @return
-     * @throws Exception
+     * @param http allows configuring web based security for specific http requests
+     * @return http
      */
     @Bean
-    public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) throws Exception {
+    public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
         log.info("Configuring HTTP Security...");
         log.info("\t-Disabling CSRF");
 
