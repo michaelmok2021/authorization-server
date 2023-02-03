@@ -33,7 +33,7 @@ public class SecurityConfig {
         log.info("\t\t-Authenticate any exchange");
 
         http.authorizeExchange((authorize) -> authorize
-                .pathMatchers("/actuator/**").hasRole("ADMIN")
+//                .pathMatchers("/actuator/**").hasRole("ADMIN")
                 .pathMatchers(HttpMethod.DELETE,"/actuator/**" ).hasAuthority("SCOPE_route.delete")
                 .pathMatchers(HttpMethod.POST,"/actuator/**" ).hasAuthority("SCOPE_route.create")
                 .pathMatchers(HttpMethod.GET,"/actuator/**" ).hasAuthority("SCOPE_route.read")

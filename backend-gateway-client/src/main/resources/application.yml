@@ -11,10 +11,11 @@ management:
   endpoints:
     web:
       exposure:
-        include: gateway
+        include: gateway, persist
   endpoint:
     gateway:
       enabled: true
+
 
 
 spring:
@@ -79,7 +80,7 @@ spring:
             client-secret: ${client_secret}
             authorization-grant-type: authorization_code
             redirect-uri: "https://${gateway}/login/oauth2/code/{registrationId}"
-            scope: openid, email, profile, roles, message.read
+            scope: openid, email, profile, roles, message.read, route.create, route.delete, route.read
 # https://backend-gateway-client:8543/login/oauth2/code/gateway
 logging:
   level:
